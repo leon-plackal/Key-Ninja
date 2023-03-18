@@ -1,10 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:wght@400;500;900&family=Roboto+Mono&display=swap');
 
 :root{
-    --bgColor: #333;
+    --bgColor: #031321;
     --textPrimary: #fff;
     --textSecondary: #667;
-    --primaryColor: #fd4;
+    --primaryColor: rgb(91, 255, 219);
 }
 
 body{
@@ -14,11 +14,12 @@ body{
     font-size: 1.4rem;
 }
 main{
-    width: 600px;
+    width: 800px;
     margin: 50px auto;
 }
 h1{
     color: var(--primaryColor);
+    text-align: center;
 }
 
 h1 svg{
@@ -48,10 +49,16 @@ button{
 }
 
 div#game{
+    margin-top: 100px;
     line-height: 35px;
     height: 105px;
     overflow: hidden;
     position: relative;
+    -webkit-user-select: none; /* Safari */        
+-moz-user-select: none; /* Firefox */
+-ms-user-select: none; /* IE10+/Edge */
+user-select: none; /* Standard */
+
 }
 #words{
     filter: blur(5px);
@@ -103,7 +110,7 @@ div.word{
     height: 1.6rem;
     background: var(--primaryColor);
     position: fixed;
-    top: 200px;
+    top: 270px;
     left: 620px;
     animation: blink 1s infinite;
 }

@@ -1,5 +1,5 @@
-const words = 'modest fire resist execution colony silver manufacturer current scramble volunteer economics race mushroom oh occupation victory recruit job legislation carbon like dollar century angel endorse appeal jacket method thank is bet insight drown graze cluster ignite excitement sign wrong congress'.split(' ');
-const gameTime = 3*1000;
+const words = 'how may if will line well then than out where place look back we man for on these possible lead since only any year leave consider ask any small you general word also however house nation we follow keep become another move there make would call because way long after among us write system down back around be here child last think thought possible perhaps group another against towards'.split(' ');
+const gameTime = 30*1000;
 window.timer = null
 window.gameStart = null;
 
@@ -25,6 +25,12 @@ function formatWord(word) {
 
 
 function newGame(){
+
+    // remove game over
+    removeClass(document.getElementById('game'), 'over')
+    // postiion cursor
+    cursor.style.top = 270+'px';
+    cursor.style.left = 520+'px'
     // clear div upon new game
     document.getElementById('words').innerHTML = '';
     for (let i = 0; i < 200; i++) { 
@@ -33,17 +39,30 @@ function newGame(){
     }
     addClass(document.querySelector('.word'), 'current')
     addClass(document.querySelector('.letter'), 'current')
+    document.getElementById('info').innerHTML = (gameTime/1000) + ''
     window.timer = null
+    window.gameStart = null;
 }
 
 function getWPM() {
     const words = [...document.querySelectorAll('.word')];
+    const lastTypedWord = document.querySelector('.word.current');
+    const typedWords = words.slice(0, words.indexOf(lastTypedWord));
+    const currentWord = typedWords.fill(word => {
+      const letters = [...word.children]
+      const incorrectLetters = letters.filter(letter => letter.className.includes('incorrect'))
+      const correctLetters = letters.filter(letter => letter.className.includes('correct'))
+        return incorrectLetters.length === 0 && correctLetters.length === letters.length
+    })
+    return currentWord.length / gameTime * 60000
 }
 
 function gameOver() {
     clearInterval(window.timer)
     addClass(document.getElementById('game'), 'over')
-    document.getElementById('info').innerHTML = `WPM: ${getWPM}`
+    const result = getWPM()
+    document.getElementById('info').innerHTML = `WPM: ${result}`
+
 }
 
 document.getElementById('game').addEventListener('keyup', ev => {
@@ -61,8 +80,6 @@ document.getElementById('game').addEventListener('keyup', ev => {
         return;
     }
 
-    console.log({key, expected})
-
     // game timer
     if (!window.timer && isLetter) {
         window.timer = setInterval( () => {
@@ -75,6 +92,7 @@ document.getElementById('game').addEventListener('keyup', ev => {
             const secondsLeft = (gameTime / 1000) - sPassed
             if (secondsLeft <= 0) {
                 gameOver()
+                return;
             }
             document.getElementById('info').innerHTML = secondsLeft + ''
         }, 1000)
@@ -143,12 +161,27 @@ document.getElementById('game').addEventListener('keyup', ev => {
 
 
     //move lines
-    if (currentWord.getBoundingClientRect().top > 260){
+    if (currentWord.getBoundingClientRect().top > 320){
         const words = document.getElementById('words')
         const margin = parseInt(words.style.marginTop || '0px')
         words.style.marginTop = (margin - 35) +'px'
 
     }
+
 })
+
+
+document.getElementById('newGameBtn').addEventListener('click', () => {
+    gameOver();
+    newGame();
+  });
+//   tab to reset
+  document.addEventListener('keydown', function(e){
+    if(e.key == 'Tab'){
+        e.preventDefault();
+    gameOver();
+    newGame();
+    }
+  })
 
 newGame()
