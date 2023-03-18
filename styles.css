@@ -63,6 +63,9 @@ div#game{
 #game:focus #focuserror{
     display: none;
 }
+#game:focus #cursor{
+    display: block;
+}
 #focuserror{
     position: absolute;
     inset: 0;
@@ -79,4 +82,28 @@ div.word{
 }
 .letter.incorrect{
     color: #f55;
+}
+
+@keyframes blink{
+    0%{
+        opacity: 1;
+    }
+    50%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+    
+}
+/* blinking cursor */
+#cursor{
+    display: none;
+    width: 2px;
+    height: 1.6rem;
+    background: var(--primaryColor);
+    position: fixed;
+    top: 200px;
+    left: 620px;
+    animation: blink 1s infinite;
 }
