@@ -107,3 +107,14 @@ div.word{
     left: 620px;
     animation: blink 1s infinite;
 }
+#game.over #words{
+    opacity: 50%;
+    filter: blur(0);
+
+}
+#game.over:focus #cursor{
+    display: none;
+}
+#game.over #focuserror{
+    display: none;
+}
