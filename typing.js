@@ -29,6 +29,7 @@ function newGame(){
     // remove game over
     removeClass(document.getElementById('game'), 'over')
     // postiion cursor
+    // cursor.style.top = document.querySelector('.word.current').getBoundingClientRect().top + 2 + 'px'
     cursor.style.top = 270+'px';
     cursor.style.left = 520+'px'
     // clear div upon new game
@@ -157,17 +158,16 @@ document.getElementById('game').addEventListener('keyup', ev => {
     const nextWord = document.querySelector('.word.current');
     const cursor = document.getElementById('cursor');
     cursor.style.top = (nextLetter || nextWord).getBoundingClientRect().top + 2 + 'px';
-    cursor.style.left = (nextLetter || nextWord).getBoundingClientRect()[nextLetter ? 'left' : 'right'] + 'px';
-
+    const transformation = (nextLetter || nextWord).getBoundingClientRect()[nextLetter ? 'left' : 'right']
+    // smoother the cursor movement
+    cursor.style.transform = `translateX(${transformation - 520 + 'px'})`;
 
     //move lines
     if (currentWord.getBoundingClientRect().top > 320){
         const words = document.getElementById('words')
         const margin = parseInt(words.style.marginTop || '0px')
         words.style.marginTop = (margin - 35) +'px'
-
     }
-
 })
 
 
@@ -179,6 +179,8 @@ document.getElementById('newGameBtn').addEventListener('click', () => {
   document.addEventListener('keydown', function(e){
     if(e.key == 'Tab'){
         e.preventDefault();
+        const words = document.getElementById('words')
+        words.style.marginTop = (0) +'px'
     gameOver();
     newGame();
     }

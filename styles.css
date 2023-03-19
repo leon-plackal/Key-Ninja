@@ -113,6 +113,7 @@ div.word{
     top: 270px;
     left: 620px;
     animation: blink 1s infinite;
+    transition: all 0.1s;
 }
 #game.over #words{
     opacity: 50%;
