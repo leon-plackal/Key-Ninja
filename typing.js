@@ -1,8 +1,50 @@
-const words = 'how may if will line well then than out where place look back we man for on these possible lead since only any year leave consider ask any small you general word also however house nation we follow keep become another move there make would call because way long after among us write system down back around be here child last think thought possible perhaps group another against towards'.split(' ');
-const gameTime = 30*1000;
+const words = 'how may if will line well then than out where place look back we man for on these lead since only any year leave consider ask any small you general word also however house nation we follow keep become move there make would call because way long after among us write zebra zoom system down back around be here child last think thought possible perhaps group another against towards brain potato script split imposter suspect theme'.split(' ');
+var gameTime = 30*1000;
 window.timer = null
 window.gameStart = null;
 
+//theme change
+// function to set a given theme/color-scheme
+function setTheme(themeName) {
+    localStorage.setItem('theme', themeName);
+    document.documentElement.className = themeName;
+}// function to toggle between light and dark theme
+function toggleTheme() {
+   if (localStorage.getItem('theme') === 'theme-dark'){
+       setTheme('theme-light');
+   } else {
+       setTheme('theme-dark');
+   }
+}// Immediately invoked function to set the theme on initial load
+(function () {
+   if (localStorage.getItem('theme') === 'theme-dark') {
+       setTheme('theme-dark');
+   } else {
+       setTheme('theme-light');
+   }
+})();
+
+//user timers
+document.getElementById('60').addEventListener('click', () => {
+    gameTime = 60*1000;
+    document.getElementById('info').innerHTML = (gameTime/1000) + ''
+    clearInterval(window.timer)
+    newGame()
+  });
+document.getElementById('30').addEventListener('click', () => {
+    gameTime = 30*1000;
+    document.getElementById('info').innerHTML = (gameTime/1000) + ''
+    clearInterval(window.timer)
+    newGame()
+});
+document.getElementById('15').addEventListener('click', () => {
+    gameTime = 15*1000;
+    document.getElementById('info').innerHTML = (gameTime/1000) + ''
+    clearInterval(window.timer)
+    newGame()
+});
+
+//class modifiers
 function addClass(el,name) {
     el.className += ' '+name;
   }
@@ -23,15 +65,16 @@ function formatWord(word) {
     return `<div class="word"><span class="letter">${word.split('').join('</span><span class="letter">')}</span></div>`;
 }
 
-
+//start new game
 function newGame(){
+    // remove game over class if exists
+    document.getElementById('game').classList.remove("over")
 
-    // remove game over
-    removeClass(document.getElementById('game'), 'over')
     // postiion cursor
-    // cursor.style.top = document.querySelector('.word.current').getBoundingClientRect().top + 2 + 'px'
-    cursor.style.top = 270+'px';
+    cursor.style.transform = `translateX(${0 + 'px'})`
+    cursor.style.top = 285+'px';
     cursor.style.left = 520+'px'
+
     // clear div upon new game
     document.getElementById('words').innerHTML = '';
     for (let i = 0; i < 200; i++) { 
@@ -40,7 +83,8 @@ function newGame(){
     }
     addClass(document.querySelector('.word'), 'current')
     addClass(document.querySelector('.letter'), 'current')
-    document.getElementById('info').innerHTML = (gameTime/1000) + ''
+    //fill second timer
+    document.getElementById('info').innerHTML = (gameTime/1000) + 's'
     window.timer = null
     window.gameStart = null;
 }
@@ -63,11 +107,9 @@ function gameOver() {
     addClass(document.getElementById('game'), 'over')
     const result = getWPM()
     document.getElementById('info').innerHTML = `WPM: ${result}`
-
 }
 
 document.getElementById('game').addEventListener('keyup', ev => {
-    // key is the pressed key when typing
     const key = ev.key
     const currentWord = document.querySelector('.word.current');
     const currentLetter = document.querySelector('.letter.current')
@@ -159,10 +201,10 @@ document.getElementById('game').addEventListener('keyup', ev => {
     const cursor = document.getElementById('cursor');
     cursor.style.top = (nextLetter || nextWord).getBoundingClientRect().top + 2 + 'px';
     const transformation = (nextLetter || nextWord).getBoundingClientRect()[nextLetter ? 'left' : 'right']
-    // smoother the cursor movement
+    // smoother the cursor movement with transform
     cursor.style.transform = `translateX(${transformation - 520 + 'px'})`;
 
-    //move lines
+    //move lines vertically
     if (currentWord.getBoundingClientRect().top > 320){
         const words = document.getElementById('words')
         const margin = parseInt(words.style.marginTop || '0px')
@@ -170,20 +212,25 @@ document.getElementById('game').addEventListener('keyup', ev => {
     }
 })
 
-
-document.getElementById('newGameBtn').addEventListener('click', () => {
-    gameOver();
-    newGame();
-  });
-//   tab to reset
-  document.addEventListener('keydown', function(e){
-    if(e.key == 'Tab'){
-        e.preventDefault();
-        const words = document.getElementById('words')
-        words.style.marginTop = (0) +'px'
-    gameOver();
-    newGame();
-    }
-  })
-
+//click/UI functions
+    //new game button
+    document.getElementById('newGameBtn').addEventListener('click', () => {
+        gameOver();
+        newGame();
+    });
+    //tab to reset
+    document.addEventListener('keydown', function(e){
+        if(e.key == 'Tab'){
+            e.preventDefault();
+            const words = document.getElementById('words')
+            words.style.marginTop = (0) +'px'
+        gameOver();
+        newGame();
+        }
+    })
+    //reset button (same as reset button)
+    document.getElementById('reset').addEventListener('click', () => {
+        gameOver();
+        newGame();
+    });
 newGame()

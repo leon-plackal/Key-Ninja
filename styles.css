@@ -1,11 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:wght@400;500;900&family=Roboto+Mono&display=swap');
 
-:root{
+/* :root{
+   
+} */
+.theme-light {
     --bgColor: #031321;
     --textPrimary: #fff;
-    --textSecondary: #667;
+    --textSecondary: rgb(153, 153, 153);
     --primaryColor: rgb(91, 255, 219);
-}
+    --accent-1: #11212d;
+    --accent-2: #1a3143;
+ }.theme-dark {
+    --bgColor: #eefffd;
+    --textPrimary: #000000;
+    --textSecondary: rgb(134, 134, 134);
+    --primaryColor: rgb(11, 80, 73);
+    --accent-1: #9cc8cb;
+    --accent-2: #71a29e;
+ }
 
 body{
     font-family: 'Roboto Flex', sans-serif;
@@ -29,22 +41,40 @@ h1 svg{
 
 #header{
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 0.8fr 2fr 0.3fr 0.55fr;
     margin: 20px 6px 30px;
-
+    font-family: 'Roboto Mono', monospace;
+    background: var(--accent-1);
+    padding: 0.4rem 0.6rem;
+    border-radius: 5px;
+    justify-content: center;    
+}
+#timer{
+    display: flex;
+    gap: 5px;
+    display: flex;
+    justify-content:center;
+}
+#themechanger svg{
+    height: 15px;
+    fill: var(--textSecondary);
+    transform: translateY(2px);
 }
 #buttons{
     text-align: right;
+    display: flex;
 }
 #info{
     color: var(--primaryColor);
 }
 button{
-    background: rgba(255, 255, 255, 0.2);
+    /* background: rgba(255, 255, 255, 0.2); */
+    background: transparent;
+    font-family: 'Roboto Mono', monospace;
     border: none;
     color: rgba(255, 255, 255, 0.7);
     border-radius: 5px;
-    padding: 5px 20px;
+    padding: 4px 20px;
     cursor: pointer;
 }
 
@@ -78,6 +108,7 @@ user-select: none; /* Standard */
     inset: 0;
     text-align: center;
     padding-top: 35px;
+    font-family: 'Roboto Mono', monospace;
 }
 div.word{
     display: inline-block;
@@ -85,10 +116,15 @@ div.word{
     margin: 0 5px;
 }
 .letter.correct{
-    color: #fff;
+    color: var(--textPrimary);
 }
 .letter.incorrect{
     color: #f55;
+}
+#newGameBtn{
+    font-family: 'Roboto Mono', monospace;
+    background: var(--accent-2);
+    place-self: center;;
 }
 
 @keyframes blink{
@@ -100,8 +136,7 @@ div.word{
     }
     100%{
         opacity: 1;
-    }
-    
+    }  
 }
 /* blinking cursor */
 #cursor{
@@ -110,8 +145,6 @@ div.word{
     height: 1.6rem;
     background: var(--primaryColor);
     position: fixed;
-    top: 270px;
-    left: 620px;
     animation: blink 1s infinite;
     transition: all 0.1s;
 }
@@ -125,4 +158,31 @@ div.word{
 }
 #game.over #focuserror{
     display: none;
+}
+
+
+#controls{
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+}
+#controls svg{
+    fill: var(--textSecondary);
+    height: 20px;
+    width: 20px;
+    transition: all .18s;
+}
+#controls svg:hover{
+    height: 23px;
+    width: 23px;
+    transform: scale(1.1);
+}
+#reset{
+    display: flex;
+    background: var(--accent-1);
+    width: 80px;
+    height: 50px;
+    border-radius: 5px;
+    justify-content: center;
+    align-items: center;
 }
