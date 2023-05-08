@@ -73,7 +73,7 @@ function newGame(){
     // postiion cursor
     cursor.style.transform = `translateX(${0 + 'px'})`
     cursor.style.top = 285+'px';
-    cursor.style.left = 520+'px'
+    cursor.style.left = 626+'px'
 
     // clear div upon new game
     document.getElementById('words').innerHTML = '';
@@ -202,7 +202,7 @@ document.getElementById('game').addEventListener('keyup', ev => {
     cursor.style.top = (nextLetter || nextWord).getBoundingClientRect().top + 2 + 'px';
     const transformation = (nextLetter || nextWord).getBoundingClientRect()[nextLetter ? 'left' : 'right']
     // smoother the cursor movement with transform
-    cursor.style.transform = `translateX(${transformation - 520 + 'px'})`;
+    cursor.style.transform = `translateX(${transformation - 626 + 'px'})`;
 
     //move lines vertically
     if (currentWord.getBoundingClientRect().top > 320){
