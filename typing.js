@@ -67,6 +67,8 @@ function formatWord(word) {
 
 //start new game
 function newGame(){
+    const words = document.getElementById('words')
+    words.style.marginTop = (0) +'px'
     // remove game over class if exists
     document.getElementById('game').classList.remove("over")
 
