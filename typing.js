@@ -66,16 +66,11 @@ function formatWord(word) {
 }
 
 //start new game
-function newGame(){
+function newGame(){    
     const words = document.getElementById('words')
     words.style.marginTop = (0) +'px'
     // remove game over class if exists
     document.getElementById('game').classList.remove("over")
-
-    // postiion cursor
-    cursor.style.transform = `translateX(${0 + 'px'})`
-    cursor.style.top = 285+'px';
-    cursor.style.left = 626+'px'
 
     // clear div upon new game
     document.getElementById('words').innerHTML = '';
@@ -85,6 +80,13 @@ function newGame(){
     }
     addClass(document.querySelector('.word'), 'current')
     addClass(document.querySelector('.letter'), 'current')
+
+    const nextLetter = document.querySelector('.letter.current');
+    const transformation = (nextLetter).getBoundingClientRect()['left']
+    // postiion cursor
+    cursor.style.top = 285+'px';
+    cursor.style.left = transformation + 'px';
+
     //fill second timer
     document.getElementById('info').innerHTML = (gameTime/1000) + 's'
     window.timer = null
@@ -203,8 +205,7 @@ document.getElementById('game').addEventListener('keyup', ev => {
     const cursor = document.getElementById('cursor');
     cursor.style.top = (nextLetter || nextWord).getBoundingClientRect().top + 2 + 'px';
     const transformation = (nextLetter || nextWord).getBoundingClientRect()[nextLetter ? 'left' : 'right']
-    // smoother the cursor movement with transform
-    cursor.style.transform = `translateX(${transformation - 626 + 'px'})`;
+    cursor.style.left = transformation + 'px';
 
     //move lines vertically
     if (currentWord.getBoundingClientRect().top > 320){
